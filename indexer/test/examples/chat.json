@@ -1,0 +1,51 @@
+{
+    "blog_name": "polychora",
+    "body": "friend: [shows me a bad picture they took of me]\nme: \"To photograph people is to violate them, by seeing them as they never see themselves, by having knowledge of them that they can never have; it turns people into objects that can be symbolically possessed. Just as a camera is a sublimation of the gun, to photograph someone is a subliminal murder - a soft murder, appropriate to a sad, frightened time.\"",
+    "can_like": false,
+    "can_reblog": true,
+    "can_reply": false,
+    "can_send_in_message": true,
+    "date": "2015-11-05 23:06:05 GMT",
+    "dialogue": [
+        {
+            "label": "friend:",
+            "name": "friend",
+            "phrase": "[shows me a bad picture they took of me]"
+        },
+        {
+            "label": "me:",
+            "name": "me",
+            "phrase": "\"To photograph people is to violate them, by seeing them as they never see themselves, by having knowledge of them that they can never have; it turns people into objects that can be symbolically possessed. Just as a camera is a sublimation of the gun, to photograph someone is a subliminal murder - a soft murder, appropriate to a sad, frightened time.\""
+        }
+    ],
+    "display_avatar": true,
+    "format": "html",
+    "id": 132627508302,
+    "note_count": 17864,
+    "post_url": "http://polychora.tumblr.com/post/132627508302/friend-shows-me-a-bad-picture-they-took-of",
+    "reblog_key": "37djD8Kq",
+    "reblogged_from_can_message": true,
+    "reblogged_from_id": "132625922775",
+    "reblogged_from_name": "iridessence",
+    "reblogged_from_title": "A Perfect Place...",
+    "reblogged_from_url": "http://iridessence.tumblr.com/post/132625922775/friend-shows-me-a-bad-picture-they-took-of",
+    "reblogged_from_uuid": "iridessence.tumblr.com",
+    "reblogged_root_can_message": true,
+    "reblogged_root_id": "132040685642",
+    "reblogged_root_name": "leaud",
+    "reblogged_root_title": "",
+    "reblogged_root_url": "http://leaud.tumblr.com/post/132040685642/friend-shows-me-a-bad-picture-they-took-of",
+    "reblogged_root_uuid": "leaud.tumblr.com",
+    "recommended_color": null,
+    "recommended_source": null,
+    "short_url": "https://tmblr.co/ZsBhZy1xXDonE",
+    "slug": "friend-shows-me-a-bad-picture-they-took-of",
+    "source_title": "leaud",
+    "source_url": "http://leaud.tumblr.com/post/132040685642/friend-shows-me-a-bad-picture-they-took-of",
+    "state": "published",
+    "summary": "friend: [shows me a bad picture they took of me]\nme: \"To photograph people is to violate them, by seeing them as they never see...",
+    "tags": [],
+    "timestamp": 1446764765,
+    "title": null,
+    "type": "chat"
+}
