@@ -12,7 +12,7 @@ newtype State = State
   , status :: String
   , index :: Maybe LunrIndex
   , query :: String
-  , results :: Array String
+  , results :: Array SearchResult
   }
 
 derive instance newtypeState :: Newtype State _

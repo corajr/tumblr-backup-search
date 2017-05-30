@@ -8,10 +8,8 @@ exports._loadIndex = function (data) {
   return lunr.Index.load(parsed);
 };
 
-exports.searchIn = function (idx) {
+exports._searchIn = function (idx) {
   return function (query) {
-    var results = idx.search(query);
-    // console.log(query, results);
-    return results.map(x => x.ref);
+    return idx.search(query);
   };
 };

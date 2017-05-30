@@ -2,6 +2,7 @@ module App.View.Search where
 
 import App.Events (Event(..))
 import App.State (State(..))
+import App.Search
 import Control.Bind (discard)
 import Data.Foldable (for_)
 import Data.Function (($), (<<<))
@@ -11,8 +12,9 @@ import Text.Smolder.HTML (a, div, h1, ul, li, input)
 import Text.Smolder.HTML.Attributes (href, target, type', className, value)
 import Text.Smolder.Markup ((!), (#!), text)
 
-result :: String -> HTML Event
-result s = li $ a ! href s ! target "_blank" $ text s
+result :: SearchResult -> HTML Event
+result (SearchResult s) =
+  li $ a ! href s.ref ! target "_blank" $ text s.ref
 
 view :: State -> HTML Event
 view (State s) =

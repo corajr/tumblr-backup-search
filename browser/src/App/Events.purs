@@ -24,7 +24,7 @@ data Event = PageView Route
            | RequestIndex
            | ReceiveIndex (Either String LunrIndex)
            | SearchQuery DOMEvent
-           | SearchResults (Array String)
+           | SearchResults (Array SearchResult)
 
 type AppEffects fx = (ajax :: AJAX, dom :: DOM, history :: HISTORY | fx)
 
