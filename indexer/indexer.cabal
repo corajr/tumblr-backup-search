@@ -17,13 +17,7 @@ library
   hs-source-dirs:      src
   exposed-modules:     Text.TumblrPost
                      , Text.TumblrPost.Internal
-                     , Text.TumblrPost.Internal.Answer
-                     , Text.TumblrPost.Internal.Chat
-                     , Text.TumblrPost.Internal.Link
-                     , Text.TumblrPost.Internal.Photo
-                     , Text.TumblrPost.Internal.Quote
-                     , Text.TumblrPost.Internal.Text
-                     , Text.TumblrPost.Internal.Video
+                     , Data.Aeson.AutoType.Alternative
   build-depends:       base >= 4.7 && < 5
                      , aeson
                      , bytestring
