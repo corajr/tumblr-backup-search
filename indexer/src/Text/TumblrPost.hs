@@ -78,7 +78,7 @@ toSimplePost tl@(TopLevel{..}) = Right $ post { _body = getTextFields tl}
                       }
 
 cliMain :: IO ()
-cliMain = extractTexts
+cliMain = buildIndex
 
 buildIndex :: IO ()
 buildIndex = do
