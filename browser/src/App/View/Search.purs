@@ -1,5 +1,6 @@
 module App.View.Search where
 
+import Prelude (show)
 import App.Events (Event(..))
 import App.State (State(..))
 import App.Search
@@ -8,13 +9,16 @@ import Data.Foldable (for_)
 import Data.Function (($), (<<<))
 import Pux.DOM.HTML (HTML)
 import Pux.DOM.Events (onChange)
-import Text.Smolder.HTML (a, div, h1, ul, li, input)
+import Text.Smolder.HTML (a, div, h1, ul, li, input, br)
 import Text.Smolder.HTML.Attributes (href, target, type', className, value)
 import Text.Smolder.Markup ((!), (#!), text)
 
 result :: SearchResult -> HTML Event
 result (SearchResult s) =
-  li $ a ! href s.ref ! target "_blank" $ text s.ref
+  li $ a ! href s.ref ! target "_blank" $ div $ do
+    text s.ref
+    br
+    text (show s.matchData)
 
 view :: State -> HTML Event
 view (State s) =
