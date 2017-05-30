@@ -2,6 +2,11 @@
 
 Search through the JSON files of posts backed up by [tumblr_backup.py][tumblr_backup].
 
+## Requirements
+
+* [stack](https://www.haskellstack.org)
+* [node](https://nodejs.org/en/)
+
 ## Usage
 
 This requires a Tumblr backed up with tumblr_backup's `-j` option (for JSON).
@@ -10,13 +15,14 @@ First, run the indexer on the directory containing the JSON files:
 
 ```sh
 cd indexer
-stack build && stack exec indexer /path/to/json > ../browser/search_index.json
+npm install # for lunr
+stack build && stack exec indexer /path/to/json > ../browser/static/search_index.json
 ```
 
 This will output an index file into the frontend folder. Then, fire up the browser:
 
 ```
-cd ../indexer
+cd ../browser
 npm install
 npm start
 ```
