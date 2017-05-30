@@ -6,11 +6,12 @@ module Text.TumblrPost where
 
 import Control.Monad ((>=>), forM_)
 import qualified Data.ByteString.Lazy.Char8 as BL
+import qualified Data.ByteString as BS
 import Data.Text (Text)
 import qualified Data.Text as T
 import Data.Time.Format (defaultTimeLocale, parseTimeOrError)
 import Data.Time.Clock (UTCTime)
-import Data.Aeson (decode, encode)
+import Data.Aeson (decode, encode, decodeStrict')
 import Data.Aeson.TH
 import Data.Aeson.Types (camelTo2)
 import Text.TumblrPost.Internal
@@ -33,8 +34,8 @@ cliMain = do
   dir <- getDirOrExit
   allFiles <- listDirectory dir
   let files = map ((dir ++ "/") ++) . filter (".json" `isSuffixOf`) $ allFiles
-  (parsed :: [Maybe TopLevel]) <- mapM (BL.readFile >=> (return . decode)) files
-  (Just hin, _, _, _) <- createProcess (shell "node build-index.js") { std_in = CreatePipe}
+  (parsed :: [Maybe TopLevel]) <- mapM (BS.readFile >=> (return . decodeStrict')) files
+  (Just hin, _, _, _) <- createProcess (shell "node build-index.js") { std_in = CreatePipe }
   BL.hPut hin (encode (catMaybes parsed))
 
 data TumblrPost = TumblrPost
