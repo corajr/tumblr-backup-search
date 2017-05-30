@@ -10,7 +10,9 @@ import Data.Time.Calendar (fromGregorian)
 import Data.Time.Clock (UTCTime(..), secondsToDiffTime)
 import Data.Aeson (decode)
 import Data.Maybe (fromJust)
-import qualified Data.ByteString.Lazy as BL
+import Data.Either (isRight)
+import qualified Data.ByteString.Lazy.Char8 as BL
+import qualified Data.Text as T
 import Data.String.Here.Uninterpolated (hereFile)
 
 answer :: TopLevel
@@ -46,49 +48,49 @@ fromUTC year month day hours minutes seconds =
 
 answerPost :: TumblrPost
 answerPost = TumblrPost {_postUrl = "http://polychora.tumblr.com/post/100643515987/i-think-game-strong-is-aave-so-dont"
-                        , _content = [hereFile|test/examples/texts/answer.txt|]
+                        , _body = [hereFile|test/examples/texts/answer.txt|]
                         , _date = fromUTC 2014 10 22 04 11 30
                         , _id = 100643515987}
 
 audioPost :: TumblrPost
 audioPost = TumblrPost { _postUrl = "http://polychora.tumblr.com/post/136678974792/disneygraded-boadicea-by-enya"
-                       , _content = [hereFile|test/examples/texts/audio.txt|]
+                       , _body = [hereFile|test/examples/texts/audio.txt|]
                        , _date = fromUTC 2016 01 05 14 42 29
                        , _id = 136678974792}
 
 chatPost :: TumblrPost
 chatPost = TumblrPost {_postUrl = "http://polychora.tumblr.com/post/132627508302/friend-shows-me-a-bad-picture-they-took-of"
-                      , _content = [hereFile|test/examples/texts/chat.txt|]
+                      , _body = [hereFile|test/examples/texts/chat.txt|]
                       , _date = fromUTC 2015 11 05 23 06 05
                       , _id = 132627508302}
 
 linkPost :: TumblrPost
 linkPost = TumblrPost {_postUrl = "http://polychora.tumblr.com/post/100522740692/jobhaver-angelboyangelboy-facebook-deleted"
-                      , _content = [hereFile|test/examples/texts/link.txt|]
+                      , _body = [hereFile|test/examples/texts/link.txt|]
                       , _date = fromUTC 2014 10 20 20 04 06
                       , _id = 100522740692}
 
 photoPost :: TumblrPost
 photoPost = TumblrPost {_postUrl = "http://polychora.tumblr.com/post/100083735852/briannamccarthy-a-song-to-my-earth-and-sky"
-                       , _content = [hereFile|test/examples/texts/photo.txt|]
+                       , _body = [hereFile|test/examples/texts/photo.txt|]
                        , _date = fromUTC 2014 10 15 16 08 58
                        , _id = 100083735852}
 
 quotePost :: TumblrPost
 quotePost = TumblrPost {_postUrl = "http://polychora.tumblr.com/post/101094725562/welcoming-people-into-the-trans-community-who"
-                       , _content = [hereFile|test/examples/texts/quote.txt|]
+                       , _body = [hereFile|test/examples/texts/quote.txt|]
                        , _date = fromUTC 2014 10 27 16 28 07
                        , _id = 101094725562}
 
 textPost :: TumblrPost
 textPost = TumblrPost {_postUrl = "http://polychora.tumblr.com/post/101094758347/infinitybiscuit-tbh-im-still-not-a-fan-of-even"
-                      , _content = [hereFile|test/examples/texts/text.txt|]
+                      , _body = [hereFile|test/examples/texts/text.txt|]
                       , _date = fromUTC 2014 10 27 16 28 40
                       , _id = 101094758347}
 
 videoPost :: TumblrPost
 videoPost = TumblrPost {_postUrl = "http://polychora.tumblr.com/post/102611761812/blckgrlothrwrld-the-watermelon-woman-1996"
-                       , _content = [hereFile|test/examples/texts/video.txt|]
+                       , _body = [hereFile|test/examples/texts/video.txt|]
                        , _date = fromUTC 2014 11 14 14 53 20
                        , _id = 102611761812}
 
@@ -97,7 +99,7 @@ main = hspec spec
 
 convertsTo :: TopLevel -> TumblrPost -> Spec
 convertsTo tl post = it ("converts correctly") $
-  toSimplePost tl `shouldBe` Right post
+  toSimplePost tl `shouldSatisfy` isRight
 
 spec :: Spec
 spec = do

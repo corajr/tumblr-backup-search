@@ -1,0 +1,17 @@
+{
+  "name": "indexer",
+  "version": "1.0.0",
+  "description": "add description of indexer here",
+  "main": "build-index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "lunr": "^2.0.4"
+  }
+}
