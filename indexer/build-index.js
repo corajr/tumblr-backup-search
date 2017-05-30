@@ -1,27 +1,34 @@
 var lunr = require('lunr'),
+    JSONStream = require('JSONStream'),
+    es = require('event-stream'),
     stdin = process.stdin,
-    stdout = process.stdout,
-    buffer = [];
+    stdout = process.stdout;
 
 stdin.resume();
 stdin.setEncoding('utf8');
 
-stdin.on('data', function (data) {
-  buffer.push(data);
-});
+var builder = new lunr.Builder();
+builder.pipeline.add(
+  lunr.trimmer,
+  lunr.stopWordFilter,
+  lunr.stemmer
+);
 
-stdin.on('end', function () {
-  var documents = JSON.parse(buffer.join());
+builder.searchPipeline.add(
+  lunr.stemmer
+);
 
-  var idx = lunr(function () {
-    this.ref('post_url');
-    this.field('date');
-    this.field('body');
+builder.ref('post_url');
+builder.field('date');
+builder.field('body');
 
-    documents.forEach(function (doc) {
-      this.add(doc);
-    }, this);
-  });
+stdin
+  .on('end', function() {
+    stdout.write(JSON.stringify(builder.build()));
+  })
+  .pipe(JSONStream.parse('*'))
+  .pipe(es.mapSync(function(doc) {
+    builder.add(doc);
+  }));
 
-  stdout.write(JSON.stringify(idx));
-});
+stdout.on('error', process.exit);
