@@ -103,9 +103,6 @@ convertsTo tl post = it ("converts correctly") $
 
 spec :: Spec
 spec = do
-  describe "TumblrPost" $ do
-    it "has various fields" $
-      pending
   describe "toSimplePost" $ do
     describe "Answer" $ do
       answer `convertsTo` answerPost
