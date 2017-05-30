@@ -45,7 +45,7 @@ foldp (Navigate url ev) st =
 foldp (ReceiveIndex (Left err)) (State state) =
   noEffects $ State state { status = "Error fetching index: " <> show err }
 foldp (ReceiveIndex (Right index)) (State state) =
-  noEffects $ State state { index = Just index, status = "Loaded" }
+  noEffects $ State state { index = Just index, status = "Enter a query:" }
 foldp (RequestIndex) (State state) =
   { state: State state { status = "Loading..." }
   , effects: [ do
@@ -63,4 +63,4 @@ foldp (SearchQuery ev) (State state) =
                 ]
      }
 foldp (SearchResults results) (State state) =
-  noEffects $ State state { results = results }
+  noEffects $ State state { results = results, status = "Enter a query:"}
