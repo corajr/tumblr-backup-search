@@ -41,6 +41,7 @@ test-suite indexer-test
                      , indexer
                      , aeson
                      , here
+                     , time
                      , bytestring
                      , hspec
                      , QuickCheck

@@ -1,7 +1,7 @@
 {-# LANGUAGE QuasiQuotes #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-module Text.TumblrPost.InternalSpec (main, spec) where
+module Text.TumblrPost.InternalSpec where
 
 import Test.Hspec
 import Text.TumblrPost.Internal hiding (main)
