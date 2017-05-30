@@ -29,6 +29,7 @@ data Event = PageView Route
 type AppEffects fx = (ajax :: AJAX, dom :: DOM, history :: HISTORY | fx)
 
 foldp :: ∀ fx. Event -> State -> EffModel State Event (AppEffects fx)
+foldp (PageView Home) (State st) = foldp (PageView Search) (State st)
 foldp (PageView route@Search) (State st) =
   { state: State st { route = route, status = "Loaded" }
   , effects: [ pure (Just RequestIndex)]

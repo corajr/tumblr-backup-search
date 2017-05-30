@@ -14,8 +14,7 @@ stdin.on('end', function () {
   var documents = JSON.parse(buffer.join());
 
   var idx = lunr(function () {
-    this.ref('id');
-    this.field('post_url');
+    this.ref('post_url');
     this.field('date');
     this.field('body');
 
