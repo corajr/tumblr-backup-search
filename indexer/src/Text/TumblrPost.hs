@@ -9,9 +9,11 @@ import qualified Data.ByteString.Lazy.Char8 as BL
 import qualified Data.ByteString as BS
 import Data.Text (Text)
 import qualified Data.Text as T
+import qualified Data.Text.IO as T
 import Data.Time.Format (defaultTimeLocale, parseTimeOrError)
 import Data.Time.Clock (UTCTime)
 import Data.Aeson (decode, encode, decodeStrict')
+import Data.Either (rights)
 import Data.Aeson.TH
 import Data.Aeson.Types (camelTo2)
 import Text.TumblrPost.Internal
@@ -29,15 +31,6 @@ getDirOrExit = do
     [dir] -> return dir
     _ -> error $ "USAGE: indexer dir/with/json > index.json"
 
-cliMain :: IO ()
-cliMain = do
-  dir <- getDirOrExit
-  allFiles <- listDirectory dir
-  let files = map ((dir ++ "/") ++) . filter (".json" `isSuffixOf`) $ allFiles
-  (parsed :: [Maybe TopLevel]) <- mapM (BS.readFile >=> (return . decodeStrict')) files
-  (Just hin, _, _, _) <- createProcess (shell "node build-index.js") { std_in = CreatePipe }
-  BL.hPut hin (encode (catMaybes parsed))
-
 data TumblrPost = TumblrPost
   { _postUrl :: Text
   , _body :: Text
@@ -52,11 +45,59 @@ parseDate = parseTimeOrError True defaultTimeLocale fmt . T.unpack
   where
     fmt = "%Y-%m-%d %H:%M:%S GMT"
 
+getTrailFields :: TrailElt -> Text
+getTrailFields TrailElt{..} = T.intercalate " " $
+  [ trailEltContent
+  , blogName trailEltBlog
+  ]
+
+getTextFields :: TopLevel -> Text
+getTextFields TopLevel{..} = T.intercalate " " $
+  [ topLevelSummary
+  , trail
+  ]
+  ++ map tOrL
+  [ topLevelAlbum
+  , topLevelTrackName
+  , topLevelSource
+  , topLevelText
+  , topLevelLinkUrl
+  , topLevelRebloggedFromUrl
+  ]
+  where
+    tOrL = maybe "" (alt id (const ""))
+    trail = maybe "" (T.intercalate " " . map (alt getTrailFields (const ""))) $ topLevelTrail
+
 toSimplePost :: TopLevel -> Either String TumblrPost
-toSimplePost tl@(TopLevel{..}) = Right $ post { _body = T.pack . BL.unpack . encode $ tl }
+toSimplePost tl@(TopLevel{..}) = Right $ post { _body = getTextFields tl}
   where
     post = TumblrPost { _postUrl = topLevelPostUrl
                       , _date = parseDate topLevelDate
                       , _body = ""
                       , _id = topLevelId
                       }
+
+cliMain :: IO ()
+cliMain = extractTexts
+
+buildIndex :: IO ()
+buildIndex = do
+  dir <- getDirOrExit
+  allFiles <- listDirectory dir
+  let files = map ((dir ++ "/") ++) . filter (".json" `isSuffixOf`) $ allFiles
+  (parsed :: [Maybe TopLevel]) <- mapM (BS.readFile >=> (return . decodeStrict')) files
+  let processed = rights . map toSimplePost . catMaybes $ parsed
+  (Just hin, _, _, _) <- createProcess (shell "node --max-old-space-size=4096 build-index.js") { std_in = CreatePipe }
+  BL.hPut hin (encode processed)
+
+extractTexts :: IO ()
+extractTexts = do
+  dir <- getDirOrExit
+  allFiles <- listDirectory dir
+  let fnames = filter (".json" `isSuffixOf`) $ allFiles
+      outFnames = map (T.unpack . T.replace ".json" ".txt" . T.pack) fnames
+      files = map ((dir ++ "/") ++) fnames
+      outFiles = map ((dir ++ "/texts/") ++) outFnames
+  forM_ (zip files outFiles) $ \(inFile, outFile) -> do
+    (Just x :: Maybe TopLevel) <- BL.readFile inFile >>= return . decode
+    T.writeFile outFile (getTextFields x)

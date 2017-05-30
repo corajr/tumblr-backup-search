@@ -99,7 +99,7 @@ main = hspec spec
 
 convertsTo :: TopLevel -> TumblrPost -> Spec
 convertsTo tl post = it ("converts correctly") $
-  toSimplePost tl `shouldSatisfy` isRight
+  toSimplePost tl `shouldBe` Right post
 
 spec :: Spec
 spec = do
