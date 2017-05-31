@@ -51,21 +51,36 @@ getTrailFields TrailElt{..} = T.intercalate " " $
   , blogName trailEltBlog
   ]
 
+getDialogueFields :: DialogueElt -> Text
+getDialogueFields DialogueElt{..} = T.intercalate " " $
+  [ dialogueEltName
+  , dialogueEltPhrase
+  ]
+
+textOrEmpty = alt id (const "")
+
+maybeTextOrEmpty = maybe "" textOrEmpty
+
 getTextFields :: TopLevel -> Text
 getTextFields TopLevel{..} = T.intercalate " " $
   [ topLevelSummary
   , trail
   ]
-  ++ map tOrL
-  [ topLevelAlbum
+  ++ map textOrEmpty topLevelTags
+  ++ maybe [] (map getDialogueFields) topLevelDialogue
+  ++ map maybeTextOrEmpty
+  [ topLevelQuestion
+  , topLevelAnswer
+  , topLevelTitle
+  , topLevelAlbum
   , topLevelTrackName
   , topLevelSource
+  , topLevelCaption
   , topLevelText
   , topLevelLinkUrl
   , topLevelRebloggedFromUrl
   ]
   where
-    tOrL = maybe "" (alt id (const ""))
     trail = maybe "" (T.intercalate " " . map (alt getTrailFields (const ""))) $ topLevelTrail
 
 toSimplePost :: TopLevel -> Either String TumblrPost
@@ -78,7 +93,8 @@ toSimplePost tl@(TopLevel{..}) = Right $ post { _body = getTextFields tl}
                       }
 
 cliMain :: IO ()
-cliMain = buildIndex
+-- cliMain = buildIndex
+cliMain = extractTexts
 
 buildIndex :: IO ()
 buildIndex = do
