@@ -14,7 +14,7 @@ First, run the indexer on the directory containing the JSON files (try
 
 ```sh
 npm install
-node build-index.js examples
+node --max-old-space-size=4096 build-index.js examples
 ```
 
 This will output an index file into the `static` folder. Then, fire up the
