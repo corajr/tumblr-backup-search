@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "bower": "^1.7.9",
+    "event-stream": "^3.3.4",
     "lunr": "^2.0.4",
     "preact": "^8.1.0",
     "preact-compat": "^3.16.0",

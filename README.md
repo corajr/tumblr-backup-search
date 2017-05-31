@@ -9,11 +9,12 @@ Search through the JSON files of posts backed up by [tumblr_backup.py][tumblr_ba
 
 ## Usage
 
-First, run the indexer on the directory containing the JSON files:
+First, run the indexer on the directory containing the JSON files (try
+`examples` if you haven't got one yet):
 
 ```sh
 npm install
-node build-index.js json_dir
+node build-index.js examples
 ```
 
 This will output an index file into the `static` folder. Then, fire up the
