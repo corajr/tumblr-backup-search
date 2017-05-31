@@ -33,9 +33,6 @@ builder.field('content');
 fs.readdir(json_dir, function(err, files) {
   if (err) throw err;
   es.readArray(files.filter(x => x.endsWith(".json")))
-    .on('end', function() {
-      fs.writeFileSync(out_file, JSON.stringify(builder.build()));
-    })
     .pipe(es.map(function(filename, cb) {
       var filepath = path.join(json_dir, filename);
       fs.readFile(filepath, 'utf8', cb);
@@ -44,5 +41,8 @@ fs.readdir(json_dir, function(err, files) {
     .pipe(es.mapSync(function(doc) {
       doc['content'] = JSON.stringify(doc);
       builder.add(doc);
-    }));
+    }))
+    .on('end', function() {
+      fs.writeFileSync(out_file, JSON.stringify(builder.build()));
+    });
 });
