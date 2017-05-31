@@ -50,48 +50,56 @@ answerPost :: TumblrPost
 answerPost = TumblrPost {_postUrl = "http://polychora.tumblr.com/post/100643515987/i-think-game-strong-is-aave-so-dont"
                         , _body = [hereFile|test/examples/texts/answer.txt|]
                         , _date = fromUTC 2014 10 22 04 11 30
+                        , _rebloggedFrom = "marxism-leninism-utenaism"
                         , _id = 100643515987}
 
 audioPost :: TumblrPost
 audioPost = TumblrPost { _postUrl = "http://polychora.tumblr.com/post/136678974792/disneygraded-boadicea-by-enya"
                        , _body = [hereFile|test/examples/texts/audio.txt|]
                        , _date = fromUTC 2016 01 05 14 42 29
+                       , _rebloggedFrom = "banji-effect"
                        , _id = 136678974792}
 
 chatPost :: TumblrPost
 chatPost = TumblrPost {_postUrl = "http://polychora.tumblr.com/post/132627508302/friend-shows-me-a-bad-picture-they-took-of"
                       , _body = [hereFile|test/examples/texts/chat.txt|]
                       , _date = fromUTC 2015 11 05 23 06 05
+                      , _rebloggedFrom = "iridessence"
                       , _id = 132627508302}
 
 linkPost :: TumblrPost
 linkPost = TumblrPost {_postUrl = "http://polychora.tumblr.com/post/100522740692/jobhaver-angelboyangelboy-facebook-deleted"
                       , _body = [hereFile|test/examples/texts/link.txt|]
                       , _date = fromUTC 2014 10 20 20 04 06
+                      , _rebloggedFrom = "jobhaver"
                       , _id = 100522740692}
 
 photoPost :: TumblrPost
 photoPost = TumblrPost {_postUrl = "http://polychora.tumblr.com/post/100083735852/briannamccarthy-a-song-to-my-earth-and-sky"
                        , _body = [hereFile|test/examples/texts/photo.txt|]
                        , _date = fromUTC 2014 10 15 16 08 58
+                       , _rebloggedFrom = "briannamccarthy"
                        , _id = 100083735852}
 
 quotePost :: TumblrPost
 quotePost = TumblrPost {_postUrl = "http://polychora.tumblr.com/post/101094725562/welcoming-people-into-the-trans-community-who"
                        , _body = [hereFile|test/examples/texts/quote.txt|]
                        , _date = fromUTC 2014 10 27 16 28 07
+                       , _rebloggedFrom = ""
                        , _id = 101094725562}
 
 textPost :: TumblrPost
 textPost = TumblrPost {_postUrl = "http://polychora.tumblr.com/post/101094758347/infinitybiscuit-tbh-im-still-not-a-fan-of-even"
                       , _body = [hereFile|test/examples/texts/text.txt|]
                       , _date = fromUTC 2014 10 27 16 28 40
+                      , _rebloggedFrom = "marxism-leninism-utenaism"
                       , _id = 101094758347}
 
 videoPost :: TumblrPost
 videoPost = TumblrPost {_postUrl = "http://polychora.tumblr.com/post/102611761812/blckgrlothrwrld-the-watermelon-woman-1996"
                        , _body = [hereFile|test/examples/texts/video.txt|]
                        , _date = fromUTC 2014 11 14 14 53 20
+                       , _rebloggedFrom = "blackfilm"
                        , _id = 102611761812}
 
 main :: IO ()

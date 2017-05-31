@@ -20,6 +20,7 @@ builder.searchPipeline.add(
 
 builder.ref('post_url');
 builder.field('date');
+builder.field('reblogged_from');
 builder.field('body');
 
 stdin

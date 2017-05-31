@@ -35,6 +35,7 @@ data TumblrPost = TumblrPost
   { _postUrl :: Text
   , _body :: Text
   , _date :: UTCTime
+  , _rebloggedFrom :: Text
   , _id :: Integer
   } deriving (Eq, Show)
 
@@ -89,6 +90,7 @@ toSimplePost tl@(TopLevel{..}) = Right $ post { _body = getTextFields tl}
     post = TumblrPost { _postUrl = topLevelPostUrl
                       , _date = parseDate topLevelDate
                       , _body = ""
+                      , _rebloggedFrom = maybeTextOrEmpty topLevelRebloggedFromName
                       , _id = topLevelId
                       }
 
